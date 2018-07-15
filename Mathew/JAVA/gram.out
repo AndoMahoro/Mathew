@@ -1,0 +1,239 @@
+State 0:
+                program -> * expr . {#}
+                    To (state 001) program -> expr .
+                    To (state 000) expr -> * expr PLUS expr .
+                    To (state 000) expr -> * expr MINUS expr .
+                    To (state 000) expr -> * expr TIMES expr .
+                    To (state 000) expr -> * expr DIVIDE expr .
+                    To (state 000) expr -> * INTEGER .
+                expr -> * expr PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 001) expr -> expr * PLUS expr .
+                expr -> * expr MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 001) expr -> expr * MINUS expr .
+                expr -> * expr TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 001) expr -> expr * TIMES expr .
+                expr -> * expr DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 001) expr -> expr * DIVIDE expr .
+                expr -> * INTEGER . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 010) expr -> INTEGER .
+
+                             INTEGER shift 10
+                             program accept
+                                expr shift 1
+
+State 1:
+             (0)program -> expr . {#}
+                    From (state 000) program -> * expr .
+                expr -> expr * PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 002) expr -> expr PLUS * expr .
+                    From (state 000) expr -> * expr PLUS expr .
+                expr -> expr * MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 004) expr -> expr MINUS * expr .
+                    From (state 000) expr -> * expr MINUS expr .
+                expr -> expr * TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 006) expr -> expr TIMES * expr .
+                    From (state 000) expr -> * expr TIMES expr .
+                expr -> expr * DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 008) expr -> expr DIVIDE * expr .
+                    From (state 000) expr -> * expr DIVIDE expr .
+
+                                   # reduce 0
+                                PLUS shift 2
+                               MINUS shift 4
+                              DIVIDE shift 8
+                               TIMES shift 6
+
+State 2:
+                expr -> * expr PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 003) expr -> expr * PLUS expr .
+                expr -> expr PLUS * expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 003) expr -> expr PLUS expr .
+                    To (state 002) expr -> * expr PLUS expr .
+                    To (state 002) expr -> * expr MINUS expr .
+                    To (state 002) expr -> * expr TIMES expr .
+                    To (state 002) expr -> * expr DIVIDE expr .
+                    To (state 002) expr -> * INTEGER .
+                    From (state 009) expr -> expr * PLUS expr .
+                    From (state 007) expr -> expr * PLUS expr .
+                    From (state 005) expr -> expr * PLUS expr .
+                    From (state 003) expr -> expr * PLUS expr .
+                    From (state 001) expr -> expr * PLUS expr .
+                expr -> * expr MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 003) expr -> expr * MINUS expr .
+                expr -> * expr TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 003) expr -> expr * TIMES expr .
+                expr -> * expr DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 003) expr -> expr * DIVIDE expr .
+                expr -> * INTEGER . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 010) expr -> INTEGER .
+
+                             INTEGER shift 10
+                                expr shift 3
+
+State 3:
+                expr -> expr * PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 002) expr -> expr PLUS * expr .
+                    From (state 002) expr -> * expr PLUS expr .
+             (1)expr -> expr PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    From (state 002) expr -> expr PLUS * expr .
+                expr -> expr * MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 004) expr -> expr MINUS * expr .
+                    From (state 002) expr -> * expr MINUS expr .
+                expr -> expr * TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 006) expr -> expr TIMES * expr .
+                    From (state 002) expr -> * expr TIMES expr .
+                expr -> expr * DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 008) expr -> expr DIVIDE * expr .
+                    From (state 002) expr -> * expr DIVIDE expr .
+
+                              DIVIDE shift 8
+                               TIMES shift 6
+                           [default] reduce 1
+
+State 4:
+                expr -> * expr PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 005) expr -> expr * PLUS expr .
+                expr -> * expr MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 005) expr -> expr * MINUS expr .
+                expr -> expr MINUS * expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 005) expr -> expr MINUS expr .
+                    To (state 004) expr -> * expr PLUS expr .
+                    To (state 004) expr -> * expr MINUS expr .
+                    To (state 004) expr -> * expr TIMES expr .
+                    To (state 004) expr -> * expr DIVIDE expr .
+                    To (state 004) expr -> * INTEGER .
+                    From (state 001) expr -> expr * MINUS expr .
+                    From (state 009) expr -> expr * MINUS expr .
+                    From (state 007) expr -> expr * MINUS expr .
+                    From (state 005) expr -> expr * MINUS expr .
+                    From (state 003) expr -> expr * MINUS expr .
+                expr -> * expr TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 005) expr -> expr * TIMES expr .
+                expr -> * expr DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 005) expr -> expr * DIVIDE expr .
+                expr -> * INTEGER . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 010) expr -> INTEGER .
+
+                             INTEGER shift 10
+                                expr shift 5
+
+State 5:
+                expr -> expr * PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 002) expr -> expr PLUS * expr .
+                    From (state 004) expr -> * expr PLUS expr .
+                expr -> expr * MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 004) expr -> expr MINUS * expr .
+                    From (state 004) expr -> * expr MINUS expr .
+             (2)expr -> expr MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    From (state 004) expr -> expr MINUS * expr .
+                expr -> expr * TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 006) expr -> expr TIMES * expr .
+                    From (state 004) expr -> * expr TIMES expr .
+                expr -> expr * DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 008) expr -> expr DIVIDE * expr .
+                    From (state 004) expr -> * expr DIVIDE expr .
+
+                              DIVIDE shift 8
+                               TIMES shift 6
+                           [default] reduce 2
+
+State 6:
+                expr -> * expr PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 007) expr -> expr * PLUS expr .
+                expr -> * expr MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 007) expr -> expr * MINUS expr .
+                expr -> * expr TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 007) expr -> expr * TIMES expr .
+                expr -> expr TIMES * expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 007) expr -> expr TIMES expr .
+                    To (state 006) expr -> * expr PLUS expr .
+                    To (state 006) expr -> * expr MINUS expr .
+                    To (state 006) expr -> * expr TIMES expr .
+                    To (state 006) expr -> * expr DIVIDE expr .
+                    To (state 006) expr -> * INTEGER .
+                    From (state 001) expr -> expr * TIMES expr .
+                    From (state 003) expr -> expr * TIMES expr .
+                    From (state 009) expr -> expr * TIMES expr .
+                    From (state 007) expr -> expr * TIMES expr .
+                    From (state 005) expr -> expr * TIMES expr .
+                expr -> * expr DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 007) expr -> expr * DIVIDE expr .
+                expr -> * INTEGER . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 010) expr -> INTEGER .
+
+                             INTEGER shift 10
+                                expr shift 7
+
+State 7:
+                expr -> expr * PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 002) expr -> expr PLUS * expr .
+                    From (state 006) expr -> * expr PLUS expr .
+                expr -> expr * MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 004) expr -> expr MINUS * expr .
+                    From (state 006) expr -> * expr MINUS expr .
+                expr -> expr * TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 006) expr -> expr TIMES * expr .
+                    From (state 006) expr -> * expr TIMES expr .
+             (3)expr -> expr TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    From (state 006) expr -> expr TIMES * expr .
+                expr -> expr * DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 008) expr -> expr DIVIDE * expr .
+                    From (state 006) expr -> * expr DIVIDE expr .
+
+                           [default] reduce 3
+
+State 8:
+                expr -> * expr PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 009) expr -> expr * PLUS expr .
+                expr -> * expr MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 009) expr -> expr * MINUS expr .
+                expr -> * expr TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 009) expr -> expr * TIMES expr .
+                expr -> * expr DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 009) expr -> expr * DIVIDE expr .
+                expr -> expr DIVIDE * expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 009) expr -> expr DIVIDE expr .
+                    To (state 008) expr -> * expr PLUS expr .
+                    To (state 008) expr -> * expr MINUS expr .
+                    To (state 008) expr -> * expr TIMES expr .
+                    To (state 008) expr -> * expr DIVIDE expr .
+                    To (state 008) expr -> * INTEGER .
+                    From (state 001) expr -> expr * DIVIDE expr .
+                    From (state 003) expr -> expr * DIVIDE expr .
+                    From (state 005) expr -> expr * DIVIDE expr .
+                    From (state 009) expr -> expr * DIVIDE expr .
+                    From (state 007) expr -> expr * DIVIDE expr .
+                expr -> * INTEGER . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 010) expr -> INTEGER .
+
+                             INTEGER shift 10
+                                expr shift 9
+
+State 9:
+                expr -> expr * PLUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 002) expr -> expr PLUS * expr .
+                    From (state 008) expr -> * expr PLUS expr .
+                expr -> expr * MINUS expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 004) expr -> expr MINUS * expr .
+                    From (state 008) expr -> * expr MINUS expr .
+                expr -> expr * TIMES expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 006) expr -> expr TIMES * expr .
+                    From (state 008) expr -> * expr TIMES expr .
+                expr -> expr * DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    To (state 008) expr -> expr DIVIDE * expr .
+                    From (state 008) expr -> * expr DIVIDE expr .
+             (4)expr -> expr DIVIDE expr . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    From (state 008) expr -> expr DIVIDE * expr .
+
+                           [default] reduce 4
+
+State 10:
+             (5)expr -> INTEGER . {#,PLUS,MINUS,DIVIDE,TIMES}
+                    From (state 000) expr -> * INTEGER .
+                    From (state 002) expr -> * INTEGER .
+                    From (state 004) expr -> * INTEGER .
+                    From (state 006) expr -> * INTEGER .
+                    From (state 008) expr -> * INTEGER .
+
+                           [default] reduce 5
+
